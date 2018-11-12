@@ -49,14 +49,30 @@
         <tr>
             <td>@Html.DisplayFor(modelItem => item.attributeName)</td>
             <td>@Html.DisplayFor(modelItem => item.attributeValue)</td>
-            <td>@Html.ActionLink("Edit Attribute", "EditAttributes", new { id = item.characterName, id2 = item.attributeName })</td>
+            <td>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    @Html.ActionLink("Edit Attribute", "EditAttributes", new { id = item.characterName, id2 = item.attributeName })
+                }
+
+            </td>
         </tr>
     }
-    <tr><td>@Html.ActionLink("Add Attribute", "CreateAttribute", new { id = Model.character_name })</td></tr>
+    <tr><td>
+            @if (User.Identity.IsAuthenticated)
+            {
+                @Html.ActionLink("Add Attribute", "CreateAttribute", new { id = Model.character_name })
+            }
+
+</td></tr>
     <tr><td>.</td></tr>
 </table>
 
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.character_name }) |
+    @if (User.Identity.IsAuthenticated)
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.character_name })
+    }
+    |
     @Html.ActionLink("Back to List", "Index")
 </p>

@@ -42,9 +42,17 @@
             @Html.DisplayFor(modelItem => item.plot_points)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.character_name }) |
+            @if (User.Identity.IsAuthenticated)
+            {
+                @Html.ActionLink("Edit", "Edit", new { id = item.character_name })
+            }
+            |
             @Html.ActionLink("Details", "Details", new { id = item.character_name }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.character_name })
+            @if (User.Identity.IsAuthenticated)
+            {
+                @Html.ActionLink("Delete", "Delete", new { id = item.character_name })
+            }
+
         </td>
     </tr>
 }
