@@ -8,7 +8,7 @@ namespace DigitalCharacterSheet2.Models
     public partial class DBConnect : DbContext
     {
         public DBConnect()
-            : base("name=DBConnect")
+            : base("name=DefaultConnection")
         {
         }
 

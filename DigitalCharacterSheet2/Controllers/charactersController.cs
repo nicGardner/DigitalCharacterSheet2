@@ -36,6 +36,7 @@ namespace DigitalCharacterSheet2.Controllers
         }
 
         // GET: characters/Create
+        [Authorize]
         public ActionResult Create()
         {
             return View();
@@ -46,6 +47,7 @@ namespace DigitalCharacterSheet2.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Create([Bind(Include = "character_name,campaign,advancement_points,plot_points")] character character)
         {
             if (ModelState.IsValid)
@@ -59,6 +61,7 @@ namespace DigitalCharacterSheet2.Controllers
         }
 
         // GET: characters/CreateAttribute
+        [Authorize]
         public ActionResult CreateAttribute(string id)
         {
             if (id == null)
@@ -83,6 +86,7 @@ namespace DigitalCharacterSheet2.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult CreateAttribute([Bind(Include = "characterName,attributeName,attributeValue")] attribute attribute)
         {
             if (ModelState.IsValid)
@@ -96,6 +100,7 @@ namespace DigitalCharacterSheet2.Controllers
         }
 
         // GET: characters/Edit/5
+        [Authorize]
         public ActionResult Edit(string id)
         {
             if (id == null)
@@ -115,6 +120,7 @@ namespace DigitalCharacterSheet2.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Edit([Bind(Include = "character_name,campaign,advancement_points,plot_points")] character character)
         {
             if (ModelState.IsValid)
@@ -129,6 +135,7 @@ namespace DigitalCharacterSheet2.Controllers
 
 
         // GET: characters/EditAttributes/5
+        [Authorize]
         public ActionResult EditAttributes(string id, string id2)
         {
             if (id == null || id2 == null)
@@ -149,6 +156,7 @@ namespace DigitalCharacterSheet2.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult EditAttributes([Bind(Include = "characterName,attributeName,attributeValue")] attribute attribute)
         {
             if (ModelState.IsValid)
@@ -163,6 +171,7 @@ namespace DigitalCharacterSheet2.Controllers
 
 
         // GET: characters/Delete/5
+        [Authorize]
         public ActionResult Delete(string id)
         {
             if (id == null)
@@ -180,6 +189,7 @@ namespace DigitalCharacterSheet2.Controllers
         // POST: characters/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult DeleteConfirmed(string id)
         {
             character character = db.characters.Find(id);
