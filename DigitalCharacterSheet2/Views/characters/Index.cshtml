@@ -1,0 +1,52 @@
+﻿@model IEnumerable<DigitalCharacterSheet2.Models.character>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.character_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.campaign)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.advancement_points)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.plot_points)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.character_name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.campaign)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.advancement_points)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.plot_points)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.character_name }) |
+            @Html.ActionLink("Details", "Details", new { id = item.character_name }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.character_name })
+        </td>
+    </tr>
+}
+
+</table>

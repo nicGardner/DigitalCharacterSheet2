@@ -1,0 +1,59 @@
+﻿@model DigitalCharacterSheet2.Models.character
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4>character</h4>
+    <hr />
+    <!--selects the character being edited-->
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.character_name)
+
+    <!-- text field for the campaign-->
+    <div class="form-group">
+        @Html.LabelFor(model => model.campaign, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.campaign, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.campaign, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <!-- text field for the advancement points-->
+    <div class="form-group">
+        @Html.LabelFor(model => model.advancement_points, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.advancement_points, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.advancement_points, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <!-- text field for the plot points-->
+    <div class="form-group">
+        @Html.LabelFor(model => model.plot_points, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.plot_points, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.plot_points, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+
