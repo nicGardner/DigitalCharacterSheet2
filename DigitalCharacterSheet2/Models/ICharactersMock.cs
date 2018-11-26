@@ -1,0 +1,18 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DigitalCharacterSheet2.Models
+{
+    interface ICharactersMock
+    {
+        IQueryable<character> Characters { get; }
+        IQueryable<attribute> Attributes { get; }
+
+        character Save(character character);
+        void Delete(character character);
+
+    }
+}
