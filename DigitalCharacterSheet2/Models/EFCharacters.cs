@@ -22,7 +22,7 @@ namespace DigitalCharacterSheet2.Models
 
         public character Save(character character)
         {
-            if(character.character_name == null)
+            if(character.character_name == null || character.character_name == "")
             {
                 db.characters.Add(character);
             }
