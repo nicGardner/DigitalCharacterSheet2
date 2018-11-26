@@ -12,199 +12,209 @@ namespace DigitalCharacterSheet2.Controllers
 {
     public class charactersController : Controller
     {
-        private DBConnect db = new DBConnect();
 
-        // GET: characters
-        public ActionResult Index()
+        private ICharactersMock db;
+        public charactersController()
         {
-            return View(db.characters.ToList());
+            this.db = new EFCharacters();
         }
 
-        // GET: characters/Details/5
-        public ActionResult Details(string id)
+        public charactersController(ICharactersMock charactersMock)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            character character = db.characters.Find(id);
-            if (character == null)
-            {
-                return HttpNotFound();
-            }
-            return View(character);
+            this.db = charactersMock;
         }
 
-        // GET: characters/Create
-        [Authorize]
-        public ActionResult Create()
-        {
-            return View();
-        }
+        //// GET: characters
+        //public ActionResult Index()
+        //{
+        //    return View(db.characters.ToList());
+        //}
 
-        // POST: characters/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize]
-        public ActionResult Create([Bind(Include = "character_name,campaign,advancement_points,plot_points")] character character)
-        {
-            if (ModelState.IsValid)
-            {
-                db.characters.Add(character);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+        //// GET: characters/Details/5
+        //public ActionResult Details(string id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    character character = db.characters.Find(id);
+        //    if (character == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(character);
+        //}
 
-            return View(character);
-        }
+        //// GET: characters/Create
+        //[Authorize]
+        //public ActionResult Create()
+        //{
+        //    return View();
+        //}
 
-        // GET: characters/CreateAttribute
-        [Authorize]
-        public ActionResult CreateAttribute(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            character character = db.characters.Find(id);
-            if (character == null)
-            {
-                return HttpNotFound();
-            }
-            attribute att = new attribute();
-            att.characterName = character.character_name;
-            att.attributeName = " ";
-            att.attributeValue = 0;
-            ViewBag.id = character.character_name;
-            return View(att);
-        }
+        //// POST: characters/Create
+        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //[Authorize]
+        //public ActionResult Create([Bind(Include = "character_name,campaign,advancement_points,plot_points")] character character)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.characters.Add(character);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
 
-        // POST: characters/CreateAttribute
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize]
-        public ActionResult CreateAttribute([Bind(Include = "characterName,attributeName,attributeValue")] attribute attribute)
-        {
-            if (ModelState.IsValid)
-            {
-                db.attributes.Add(attribute);
-                db.SaveChanges();
-                return RedirectToAction("Details", new { id = attribute.characterName });
-            }
+        //    return View(character);
+        //}
 
-            return View(attribute);
-        }
+        //// GET: characters/CreateAttribute
+        //[Authorize]
+        //public ActionResult CreateAttribute(string id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    character character = db.characters.Find(id);
+        //    if (character == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    attribute att = new attribute();
+        //    att.characterName = character.character_name;
+        //    att.attributeName = " ";
+        //    att.attributeValue = 0;
+        //    ViewBag.id = character.character_name;
+        //    return View(att);
+        //}
 
-        // GET: characters/Edit/5
-        [Authorize]
-        public ActionResult Edit(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            character character = db.characters.Find(id);
-            if (character == null)
-            {
-                return HttpNotFound();
-            }
-            return View(character);
-        }
+        //// POST: characters/CreateAttribute
+        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //[Authorize]
+        //public ActionResult CreateAttribute([Bind(Include = "characterName,attributeName,attributeValue")] attribute attribute)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.attributes.Add(attribute);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Details", new { id = attribute.characterName });
+        //    }
 
-        // POST: characters/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize]
-        public ActionResult Edit([Bind(Include = "character_name,campaign,advancement_points,plot_points")] character character)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(character).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(character);
-        }
+        //    return View(attribute);
+        //}
 
+        //// GET: characters/Edit/5
+        //[Authorize]
+        //public ActionResult Edit(string id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    character character = db.characters.Find(id);
+        //    if (character == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(character);
+        //}
 
-
-        // GET: characters/EditAttributes/5
-        [Authorize]
-        public ActionResult EditAttributes(string id, string id2)
-        {
-            if (id == null || id2 == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            attribute attribute = db.attributes.Find(id, id2);
-            //character character = db.characters.Find(id);
-            if (attribute == null)
-            {
-                return HttpNotFound();
-            }
-            return View(attribute);
-        }
-
-        // POST: characters/EditAttributes/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize]
-        public ActionResult EditAttributes([Bind(Include = "characterName,attributeName,attributeValue")] attribute attribute)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(attribute).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(attribute);
-        }
+        //// POST: characters/Edit/5
+        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //[Authorize]
+        //public ActionResult Edit([Bind(Include = "character_name,campaign,advancement_points,plot_points")] character character)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.Entry(character).State = EntityState.Modified;
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+        //    return View(character);
+        //}
 
 
 
-        // GET: characters/Delete/5
-        [Authorize]
-        public ActionResult Delete(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            character character = db.characters.Find(id);
-            if (character == null)
-            {
-                return HttpNotFound();
-            }
-            return View(character);
-        }
+        //// GET: characters/EditAttributes/5
+        //[Authorize]
+        //public ActionResult EditAttributes(string id, string id2)
+        //{
+        //    if (id == null || id2 == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    attribute attribute = db.attributes.Find(id, id2);
+        //    //character character = db.characters.Find(id);
+        //    if (attribute == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(attribute);
+        //}
 
-        // POST: characters/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        [Authorize]
-        public ActionResult DeleteConfirmed(string id)
-        {
-            character character = db.characters.Find(id);
-            db.characters.Remove(character);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+        //// POST: characters/EditAttributes/5
+        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //[Authorize]
+        //public ActionResult EditAttributes([Bind(Include = "characterName,attributeName,attributeValue")] attribute attribute)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.Entry(attribute).State = EntityState.Modified;
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+        //    return View(attribute);
+        //}
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+
+
+        //// GET: characters/Delete/5
+        //[Authorize]
+        //public ActionResult Delete(string id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    character character = db.characters.Find(id);
+        //    if (character == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(character);
+        //}
+
+        //// POST: characters/Delete/5
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //[Authorize]
+        //public ActionResult DeleteConfirmed(string id)
+        //{
+        //    character character = db.characters.Find(id);
+        //    db.characters.Remove(character);
+        //    db.SaveChanges();
+        //    return RedirectToAction("Index");
+        //}
+
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing)
+        //    {
+        //        db.Dispose();
+        //    }
+        //    base.Dispose(disposing);
+        //}
     }
 }

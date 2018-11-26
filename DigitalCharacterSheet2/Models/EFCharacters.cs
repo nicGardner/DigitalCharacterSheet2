@@ -32,6 +32,6 @@ namespace DigitalCharacterSheet2.Models
             }
             db.SaveChanges();
             return character;
-        }
+        }   
     }
 }

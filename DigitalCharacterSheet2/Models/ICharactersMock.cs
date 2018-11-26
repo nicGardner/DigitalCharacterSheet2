@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DigitalCharacterSheet2.Models
 {
-    interface ICharactersMock
+    public interface ICharactersMock
     {
         IQueryable<character> Characters { get; }
         IQueryable<attribute> Attributes { get; }
