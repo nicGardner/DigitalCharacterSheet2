@@ -10,9 +10,9 @@ namespace DigitalCharacterSheet2.Models
 
         private DBConnect db = new DBConnect();
 
-        public IQueryable<character> Characters => throw new NotImplementedException();
+        public IQueryable<character> Characters { get { return db.characters; } }
 
-        public IQueryable<attribute> Attributes => throw new NotImplementedException();
+        public IQueryable<attribute> Attributes { get { return db.attributes; } }
 
         public void Delete(character character)
         {
@@ -20,18 +20,27 @@ namespace DigitalCharacterSheet2.Models
             db.SaveChanges();
         }
 
-        public character Save(character character)
+        public character SaveEdit(character character)
         {
-            if(character.character_name == null || character.character_name == "")
-            {
-                db.characters.Add(character);
-            }
-            else
-            {
-                db.Entry(character).State = System.Data.Entity.EntityState.Modified;
-            }
+            //if(character.character_name == null || character.character_name == "" || character.character_name ==" ")
+            //{
+            //    db.characters.Add(character);
+            //}
+            //else
+            //{
+            //    db.Entry(character).State = System.Data.Entity.EntityState.Modified;
+            //}
+            //db.SaveChanges();
+            //return character;
+            db.Entry(character).State = System.Data.Entity.EntityState.Modified;
             db.SaveChanges();
             return character;
         }   
+        public character SaveNew(character character)
+        {
+            db.characters.Add(character);
+            db.SaveChanges();
+            return character;
+        }
     }
 }

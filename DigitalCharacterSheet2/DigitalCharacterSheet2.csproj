@@ -208,6 +208,8 @@
     <Compile Include="Models\attribute.cs" />
     <Compile Include="Models\character.cs" />
     <Compile Include="Models\DBConnect.cs" />
+    <Compile Include="Models\EFCharacters.cs" />
+    <Compile Include="Models\ICharactersMock.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

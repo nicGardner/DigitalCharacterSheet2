@@ -11,7 +11,8 @@ namespace DigitalCharacterSheet2.Models
         IQueryable<character> Characters { get; }
         IQueryable<attribute> Attributes { get; }
 
-        character Save(character character);
+        character SaveNew(character character);
+        character SaveEdit(character character);
         void Delete(character character);
 
     }

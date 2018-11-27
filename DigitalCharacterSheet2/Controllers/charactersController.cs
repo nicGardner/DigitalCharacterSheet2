@@ -24,51 +24,55 @@ namespace DigitalCharacterSheet2.Controllers
             this.db = charactersMock;
         }
 
-        //// GET: characters
-        //public ActionResult Index()
-        //{
-        //    return View(db.characters.ToList());
-        //}
+        // GET: characters
+        public ActionResult Index()
+        {
+            var characters = db.Characters;
+            return View("Index", characters.ToList());
+        }
 
-        //// GET: characters/Details/5
-        //public ActionResult Details(string id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    character character = db.characters.Find(id);
-        //    if (character == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(character);
-        //}
+        // GET: characters/Details/5
+        public ActionResult Details(string id)
+        {
+            if (id == null)
+            {
+                //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return View("Error");
+            }
+            //character character = db.characters.Find(id);
+            character character = db.Characters.SingleOrDefault(a => a.character_name == id);
+            if (character == null)
+            {
+                return View("Error");
+            }
+            return View("Details", character);
+        }
 
-        //// GET: characters/Create
-        //[Authorize]
-        //public ActionResult Create()
-        //{
-        //    return View();
-        //}
+        // GET: characters/Create
+        [Authorize]
+        public ActionResult Create()
+        {
+            return View("Create");
+        }
 
-        //// POST: characters/Create
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //[Authorize]
-        //public ActionResult Create([Bind(Include = "character_name,campaign,advancement_points,plot_points")] character character)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.characters.Add(character);
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
+        // POST: characters/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public ActionResult Create([Bind(Include = "character_name,campaign,advancement_points,plot_points")] character character)
+        {
+            if (ModelState.IsValid)
+            {
+                //db.characters.Add(character);
+                //db.SaveChanges();
+                db.SaveNew(character);
+                return RedirectToAction("Index");
+            }
 
-        //    return View(character);
-        //}
+            return View(character);
+        }
 
         //// GET: characters/CreateAttribute
         //[Authorize]
@@ -76,9 +80,10 @@ namespace DigitalCharacterSheet2.Controllers
         //{
         //    if (id == null)
         //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //        return View("Error");
         //    }
-        //    character character = db.characters.Find(id);
+        //    //character character = db.characters.Find(id);
+        //    character character = db.Characters.SingleOrDefault(a => a.character_name == id);
         //    if (character == null)
         //    {
         //        return HttpNotFound();
@@ -88,7 +93,7 @@ namespace DigitalCharacterSheet2.Controllers
         //    att.attributeName = " ";
         //    att.attributeValue = 0;
         //    ViewBag.id = character.character_name;
-        //    return View(att);
+        //    return View("CreateAttribute", att);
         //}
 
         //// POST: characters/CreateAttribute
