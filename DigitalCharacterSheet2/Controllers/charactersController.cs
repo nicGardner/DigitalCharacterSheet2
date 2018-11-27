@@ -74,45 +74,46 @@ namespace DigitalCharacterSheet2.Controllers
             return View("Create", character);
         }
 
-        //// GET: characters/CreateAttribute
-        //[Authorize]
-        //public ActionResult CreateAttribute(string id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return View("Error");
-        //    }
-        //    //character character = db.characters.Find(id);
-        //    character character = db.Characters.SingleOrDefault(a => a.character_name == id);
-        //    if (character == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    attribute att = new attribute();
-        //    att.characterName = character.character_name;
-        //    att.attributeName = " ";
-        //    att.attributeValue = 0;
-        //    ViewBag.id = character.character_name;
-        //    return View("CreateAttribute", att);
-        //}
+        // GET: characters/CreateAttribute
+        [Authorize]
+        public ActionResult CreateAttribute(string id)
+        {
+            if (id == null)
+            {
+                return View("Error");
+            }
+            //character character = db.characters.Find(id);
+            character character = db.Characters.SingleOrDefault(a => a.character_name == id);
+            if (character == null)
+            {
+                return View("Error");
+            }
+            attribute att = new attribute();
+            att.characterName = character.character_name;
+            att.attributeName = " ";
+            att.attributeValue = 0;
+            ViewBag.id = character.character_name;
+            return View("CreateAttribute", att);
+        }
 
-        //// POST: characters/CreateAttribute
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //[Authorize]
-        //public ActionResult CreateAttribute([Bind(Include = "characterName,attributeName,attributeValue")] attribute attribute)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.attributes.Add(attribute);
-        //        db.SaveChanges();
-        //        return RedirectToAction("Details", new { id = attribute.characterName });
-        //    }
+        // POST: characters/CreateAttribute
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public ActionResult CreateAttribute([Bind(Include = "characterName,attributeName,attributeValue")] attribute attribute)
+        {
+            if (ModelState.IsValid)
+            {
+                //db.attributes.Add(attribute);
+                //db.SaveChanges();
+                db.SaveAttribute(attribute);
+                return RedirectToAction("Details", new { id = attribute.characterName });
+            }
 
-        //    return View(attribute);
-        //}
+            return View("CreateAttribute", attribute);
+        }
 
         // GET: characters/Edit/5
         [Authorize]

@@ -13,6 +13,7 @@ namespace DigitalCharacterSheet2.Models
 
         character SaveNew(character character);
         character SaveEdit(character character);
+        attribute SaveAttribute(attribute attribute);
         void Delete(character character);
 
     }

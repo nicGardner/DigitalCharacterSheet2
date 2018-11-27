@@ -296,39 +296,41 @@ namespace DigitalCharacterSheet2.Tests.Controllers
 
         // GET: characters/CreateAttribute
         #region
-        //[TestMethod]
-        //public void CreateAttributeNoId()
-        //{
-        //    // act
-        //    var result = (ViewResult)controller.CreateAttribute(null);
+        [TestMethod]
+        public void CreateAttributeNoId()
+        {
+            // arrange
+            string id = null;
 
-        //    // assert
-        //    Assert.AreEqual("Error", result.ViewName);
-        //}
+            // act
+            var result = (ViewResult)controller.CreateAttribute(id);
 
-        //public void CreateAttributeInvalidId()
-        //{
-        //    // act
-        //    var result = (ViewResult)controller.CreateAttribute("Odysseus");
+            // assert
+            Assert.AreEqual("Error", result.ViewName);
+        }
 
-        //    // assert
-        //    Assert.AreEqual("Error", result.ViewName);
-        //}
+        [TestMethod]
+        public void CreateAttributeInvalidId()
+        {
+            // act
+            var result = (ViewResult)controller.CreateAttribute("Odysseus");
 
-        //[TestMethod]
-        //public void CreateAttributeValidId()
-        //{
-        //    // act
-        //    ViewResult result = (ViewResult)controller.CreateAttribute(characters[0].character_name);
+            // assert
+            Assert.AreEqual("Error", result.ViewName);
+        }
+        [TestMethod]
 
-        //    attribute att = new attribute();
-        //    att.characterName = characters[0].character_name;
-        //    att.attributeName = " ";
-        //    att.attributeValue = 0;
+        public void CreateAttributeValidId()
+        {
+            // act
+            ViewResult result = (ViewResult)controller.CreateAttribute("testName1");
 
-        //    // assert
-        //    Assert.AreEqual(att, result.ViewName);
-        //}
+            // assert
+            Assert.AreEqual("Edit", result.ViewName);
+        }
         #endregion
+
+        // POST: characters/CreateAttribute
+
     }
 }
