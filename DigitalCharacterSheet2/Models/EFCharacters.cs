@@ -32,8 +32,13 @@ namespace DigitalCharacterSheet2.Models
             db.SaveChanges();
             return character;
         }
-
         public attribute SaveAttribute(attribute attribute)
+        {
+            db.attributes.Add(attribute);
+            db.SaveChanges();
+            return attribute;
+        }
+        public attribute SaveEditAttribute(attribute attribute)
         {
             db.Entry(attribute).State = System.Data.Entity.EntityState.Modified;
             db.SaveChanges();

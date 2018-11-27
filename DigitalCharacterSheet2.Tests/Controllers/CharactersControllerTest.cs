@@ -326,11 +326,116 @@ namespace DigitalCharacterSheet2.Tests.Controllers
             ViewResult result = (ViewResult)controller.CreateAttribute("testName1");
 
             // assert
-            Assert.AreEqual("Edit", result.ViewName);
+            Assert.AreEqual("CreateAttribute", result.ViewName);
         }
         #endregion
 
         // POST: characters/CreateAttribute
+        #region
+        public void CreateAttributeValidAttribute()
+        {
+            // act 
+            RedirectToRouteResult result = (RedirectToRouteResult)controller.CreateAttribute(attributes[0]);
 
+            // assert
+            Assert.AreEqual("Details", result.RouteValues["action"]);
+        }
+
+        [TestMethod]
+        public void CreateAttributeInvalidCharacter()
+        {
+            // arrange
+            attribute invalidAttribute = new attribute();
+
+            // act
+            controller.ModelState.AddModelError("Cannot create", "create exception");
+            ViewResult result = (ViewResult)controller.CreateAttribute(invalidAttribute);
+
+            // assert
+            Assert.AreEqual("CreateAttribute", result.ViewName);
+        }
+        #endregion
+
+        // GET: characters/EditAttributes/5
+        #region
+        [TestMethod]
+        public void EditAttributesNoId()
+        {
+            // arrange
+            string id = null;
+            string id2 = "abcd";
+
+            // act
+            var result = (ViewResult)controller.EditAttributes(id, id2);
+
+            // assert
+            Assert.AreEqual("Error", result.ViewName);
+        }
+
+        [TestMethod]
+        public void EditAttributesNoId2()
+        {
+            // arrange
+            string id = "abcd";
+            string id2 = null;
+
+            // act
+            var result = (ViewResult)controller.EditAttributes(id, id2);
+
+            // assert
+            Assert.AreEqual("Error", result.ViewName);
+        }
+
+        [TestMethod]
+        public void EditAttributesInvalidIds()
+        {
+            // arrange
+            string id = "abcd";
+            string id2 = "abcd";
+
+            // act
+            var result = (ViewResult)controller.EditAttributes(id, id2);
+
+            // assert
+            Assert.AreEqual("Error", result.ViewName);
+        }
+        [TestMethod]
+
+        public void EditAttributesValidIds()
+        {
+            // act
+            ViewResult result = (ViewResult)controller.EditAttributes(attributes[0].characterName, attributes[0].attributeName);
+
+            // assert
+            Assert.AreEqual("EditAttributes", result.ViewName);
+        }
+        #endregion
+
+        // POST: characters/EditAttributes/5
+        #region
+        [TestMethod]
+        public void EditAttributesValidAttribute()
+        {
+            // act 
+            RedirectToRouteResult result = (RedirectToRouteResult)controller.EditAttributes(attributes[0]);
+
+            // assert
+            Assert.AreEqual("Index", result.RouteValues["action"]);
+        }
+
+        [TestMethod]
+        public void EditAttributesInvalidAttribute()
+        {
+            // arrange
+            attribute invalidAttribute = new attribute();
+
+            // act
+            controller.ModelState.AddModelError("Cannot create", "create exception");
+            ViewResult result = (ViewResult)controller.EditAttributes(invalidAttribute);
+
+            // assert
+            Assert.AreEqual("EditAttribute", result.ViewName);
+        }
+        #endregion
     }
 }

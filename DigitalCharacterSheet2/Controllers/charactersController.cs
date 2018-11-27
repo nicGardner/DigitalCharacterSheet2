@@ -92,6 +92,7 @@ namespace DigitalCharacterSheet2.Controllers
             att.characterName = character.character_name;
             att.attributeName = " ";
             att.attributeValue = 0;
+            //db.SaveAttribute(att);
             ViewBag.id = character.character_name;
             return View("CreateAttribute", att);
         }
@@ -150,39 +151,40 @@ namespace DigitalCharacterSheet2.Controllers
 
 
 
-        //// GET: characters/EditAttributes/5
-        //[Authorize]
-        //public ActionResult EditAttributes(string id, string id2)
-        //{
-        //    if (id == null || id2 == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    attribute attribute = db.attributes.Find(id, id2);
-        //    //character character = db.characters.Find(id);
-        //    if (attribute == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(attribute);
-        //}
+        // GET: characters/EditAttributes/5
+        [Authorize]
+        public ActionResult EditAttributes(string id, string id2)
+        {
+            if (id == null || id2 == null)
+            {
+                return View("Error");
+            }
+            attribute attribute = db.Attributes.FirstOrDefault(a => a.characterName == id && a.attributeName == id2);
+            //character character = db.characters.Find(id);
+            if (attribute == null)
+            {
+                return View("Error");
+            }
+            return View("EditAttributes", attribute);
+        }
 
-        //// POST: characters/EditAttributes/5
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //[Authorize]
-        //public ActionResult EditAttributes([Bind(Include = "characterName,attributeName,attributeValue")] attribute attribute)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.Entry(attribute).State = EntityState.Modified;
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-        //    return View(attribute);
-        //}
+        // POST: characters/EditAttributes/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public ActionResult EditAttributes([Bind(Include = "characterName,attributeName,attributeValue")] attribute attribute)
+        {
+            if (ModelState.IsValid)
+            {
+                //db.Entry(attribute).State = EntityState.Modified;
+                //db.SaveChanges();
+                db.SaveEditAttribute(attribute);
+                return RedirectToAction("Index");
+            }
+            return View("EditAttribute", attribute);
+        }
 
 
 
