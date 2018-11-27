@@ -185,33 +185,45 @@ namespace DigitalCharacterSheet2.Controllers
 
 
 
-        //// GET: characters/Delete/5
-        //[Authorize]
-        //public ActionResult Delete(string id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    character character = db.characters.Find(id);
-        //    if (character == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(character);
-        //}
+        // GET: characters/Delete/5
+        [Authorize]
+        public ActionResult Delete(string id)
+        {
+            if (id == null)
+            {
+                return View("Error");
+            }
+            character character = db.Characters.SingleOrDefault(a => a.character_name == id);
+            if (character == null)
+            {
+                return View("Error");
+            }
+            return View("Delete", character);
+        }
 
-        //// POST: characters/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //[Authorize]
-        //public ActionResult DeleteConfirmed(string id)
-        //{
-        //    character character = db.characters.Find(id);
-        //    db.characters.Remove(character);
-        //    db.SaveChanges();
-        //    return RedirectToAction("Index");
-        //}
+        // POST: charactersDeleteConfirmed
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public ActionResult DeleteConfirmed(string id)
+        {
+            //character character = db.characters.Find(id);
+            //db.characters.Remove(character);
+            //db.SaveChanges();
+            //return RedirectToAction("Index");
+
+            if (id == null)
+            {
+                return View("Error");
+            }
+            character character = db.Characters.SingleOrDefault(a => a.character_name == id);
+            if (character == null)
+            {
+                return View("Error");
+            }
+            db.Delete(character);
+            return RedirectToAction("Index");
+        }
 
         //protected override void Dispose(bool disposing)
         //{

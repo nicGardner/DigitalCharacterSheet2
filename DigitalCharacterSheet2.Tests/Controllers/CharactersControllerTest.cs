@@ -25,6 +25,7 @@ namespace DigitalCharacterSheet2.Tests.Controllers
         {
             mock = new Mock<ICharactersMock>();
 
+            // list of valid mock characters to test with
             characters = new List<character>
             {
                 new character { character_name = "testName1", campaign = "testing", advancement_points = 0, plot_points = 0},
@@ -32,6 +33,7 @@ namespace DigitalCharacterSheet2.Tests.Controllers
                 new character { character_name = "testName3", campaign = "testing", advancement_points = 0, plot_points = 0}
             };
 
+            // list of valid mock attributes to test with
             attributes = new List<attribute>
             {
                 new attribute { attributeName = "Strength", attributeValue = 0, characterName = characters[0].character_name},
@@ -81,7 +83,7 @@ namespace DigitalCharacterSheet2.Tests.Controllers
         public void DetailsInvalidId()
         {
             // act
-            var result = (ViewResult)controller.Details("Odysseus");
+            var result = (ViewResult)controller.Details("Odysseus"); // if you get this reference, you are officially my favorite teacher
 
             // assert
             Assert.AreEqual("Error", result.ViewName);
@@ -162,8 +164,11 @@ namespace DigitalCharacterSheet2.Tests.Controllers
         [TestMethod]
         public void EditNoId()
         {
+            // arrange
+            string id = null;
+
             // act
-            var result = (ViewResult)controller.Edit(null);
+            var result = (ViewResult)controller.Edit(id);
 
             // assert
             Assert.AreEqual("Error", result.ViewName);
@@ -214,6 +219,78 @@ namespace DigitalCharacterSheet2.Tests.Controllers
 
             // assert
             Assert.AreEqual("Edit", result.ViewName);
+        }
+        #endregion
+
+        // GET: characters/Delete/5
+        #region
+        [TestMethod]
+        public void DeleteNoId()
+        {
+            // arrange
+            string id = null;
+
+            // act
+            var result = (ViewResult)controller.Delete(id);
+
+            // assert
+            Assert.AreEqual("Error", result.ViewName);
+        }
+
+        [TestMethod]
+        public void DeleteInvalidId()
+        {
+            // act
+            var result = (ViewResult)controller.Delete("Odysseus");
+
+            // assert
+            Assert.AreEqual("Error", result.ViewName);
+        }
+        [TestMethod]
+
+        public void DeleteValidId()
+        {
+            // act
+            ViewResult result = (ViewResult)controller.Delete("testName1");
+
+            // assert
+            Assert.AreEqual("Delete", result.ViewName);
+        }
+        #endregion
+
+        // POST: characters/DeleteConfirmed
+        #region
+        [TestMethod]
+        public void DeleteConfirmedNoId()
+        {
+            // arrange
+            string id = null;
+
+            // act
+            var result = (ViewResult)controller.DeleteConfirmed(id);
+
+            // assert
+            Assert.AreEqual("Error", result.ViewName);
+        }
+
+        [TestMethod]
+        public void DeleteConfirmedInvalidId()
+        {
+            // act
+            var result = (ViewResult)controller.DeleteConfirmed("Odysseus");
+
+            // assert
+            Assert.AreEqual("Error", result.ViewName);
+        }
+        [TestMethod]
+
+        public void DeleteConfirmedValidId()
+        {
+            // act 
+            RedirectToRouteResult result = (RedirectToRouteResult)controller.DeleteConfirmed(characters[0].character_name);
+
+            // assert
+            Assert.AreEqual("Index", result.RouteValues["action"]);
         }
         #endregion
 
