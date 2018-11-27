@@ -190,6 +190,32 @@ namespace DigitalCharacterSheet2.Tests.Controllers
         }
         #endregion
 
+        // POST: characters/Edit/5
+        #region
+        [TestMethod]
+        public void EditValidCharacter()
+        {
+            // act 
+            RedirectToRouteResult result = (RedirectToRouteResult)controller.Edit(characters[0]);
+
+            // assert
+            Assert.AreEqual("Index", result.RouteValues["action"]);
+        }
+
+        [TestMethod]
+        public void EditInvalidCharacter()
+        {
+            // arrange
+            character invalidCharacter = new character();
+
+            // act
+            controller.ModelState.AddModelError("Cannot create", "create exception");
+            ViewResult result = (ViewResult)controller.Edit(invalidCharacter);
+
+            // assert
+            Assert.AreEqual("Edit", result.ViewName);
+        }
+        #endregion
 
         // GET: characters/CreateAttribute
         #region

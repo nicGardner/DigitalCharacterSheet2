@@ -130,22 +130,22 @@ namespace DigitalCharacterSheet2.Controllers
             return View("Edit", character);
         }
 
-        //// POST: characters/Edit/5
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //[Authorize]
-        //public ActionResult Edit([Bind(Include = "character_name,campaign,advancement_points,plot_points")] character character)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.Entry(character).State = EntityState.Modified;
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-        //    return View(character);
-        //}
+        // POST: characters/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public ActionResult Edit([Bind(Include = "character_name,campaign,advancement_points,plot_points")] character character)
+        {
+            if (ModelState.IsValid)
+            {
+                //db.Entry(character).State = EntityState.Modified;
+                db.SaveEdit(character); 
+                return RedirectToAction("Index");
+            }
+            return View("Edit", character);
+        }
 
 
 
