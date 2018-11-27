@@ -157,6 +157,40 @@ namespace DigitalCharacterSheet2.Tests.Controllers
         }
         #endregion
 
+        // GET: characters/Edit/5
+        #region
+        [TestMethod]
+        public void EditNoId()
+        {
+            // act
+            var result = (ViewResult)controller.Edit(null);
+
+            // assert
+            Assert.AreEqual("Error", result.ViewName);
+        }
+
+        [TestMethod]
+        public void EditInvalidId()
+        {
+            // act
+            var result = (ViewResult)controller.Edit("Odysseus");
+
+            // assert
+            Assert.AreEqual("Error", result.ViewName);
+        }
+        [TestMethod]
+
+        public void EditViewLoads()
+        {
+            // act
+            ViewResult result = (ViewResult)controller.Edit("testName1");
+
+            // assert
+            Assert.AreEqual("Edit", result.ViewName);
+        }
+        #endregion
+
+
         // GET: characters/CreateAttribute
         #region
         //[TestMethod]

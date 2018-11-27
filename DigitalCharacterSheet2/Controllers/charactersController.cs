@@ -71,7 +71,7 @@ namespace DigitalCharacterSheet2.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View(character);
+            return View("Create", character);
         }
 
         //// GET: characters/CreateAttribute
@@ -114,21 +114,21 @@ namespace DigitalCharacterSheet2.Controllers
         //    return View(attribute);
         //}
 
-        //// GET: characters/Edit/5
-        //[Authorize]
-        //public ActionResult Edit(string id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    character character = db.characters.Find(id);
-        //    if (character == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(character);
-        //}
+        // GET: characters/Edit/5
+        [Authorize]
+        public ActionResult Edit(string id)
+        {
+            if (id == null)
+            {
+                return View("Error");
+            }
+            character character = db.Characters.SingleOrDefault(a => a.character_name == id);
+            if (character == null)
+            {
+                return View("Error");
+            }
+            return View("Edit", character);
+        }
 
         //// POST: characters/Edit/5
         //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
